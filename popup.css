@@ -1,17 +1,17 @@
 :root {
-  --color-primary: #0D9488;
-  --color-primary-hover: #0F766E;
-  --color-secondary: #14B8A6;
-  --color-accent: #EA580C;
-  --color-background: #FFFFFF;
-  --color-surface: #F8FAFC;
-  --color-surface-hover: #F1F5F9;
-  --color-foreground: #0F172A;
-  --color-foreground-muted: #64748B;
-  --color-border: #E2E8F0;
-  --color-destructive: #DC2626;
-  --color-destructive-hover: #B91C1C;
-  --color-success: #10B981;
+  --color-primary: #0d9488;
+  --color-primary-hover: #0f766e;
+  --color-secondary: #14b8a6;
+  --color-accent: #ea580c;
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-surface-hover: #f1f5f9;
+  --color-foreground: #0f172a;
+  --color-foreground-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-destructive: #dc2626;
+  --color-destructive-hover: #b91c1c;
+  --color-success: #10b981;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md: 0 1px 3px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 4px 12px rgba(15, 23, 42, 0.08);
@@ -22,19 +22,27 @@
 }
 
 /* Reset & Base */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 340px;
   min-width: 340px;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Plus Jakarta Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-size: 13px;
   color: var(--color-foreground);
   background: var(--color-surface);
@@ -74,7 +82,11 @@ svg {
   justify-content: space-between;
   gap: 8px;
   padding: 14px 14px 12px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
   color: #fff;
 }
 
@@ -132,7 +144,10 @@ svg {
   color: var(--color-primary);
   background: #fff;
   border-radius: var(--radius-full);
-  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
   white-space: nowrap;
   box-shadow: var(--shadow-sm);
 }
@@ -183,7 +198,10 @@ svg {
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   outline: none;
-  transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .search-input::placeholder {
@@ -244,7 +262,9 @@ svg {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Category header */
@@ -285,7 +305,7 @@ svg {
 
 .category-header.enabled .category-count {
   color: var(--color-primary);
-  background: rgba(13, 148, 136, 0.10);
+  background: rgba(13, 148, 136, 0.1);
 }
 
 .category-header.disabled .category-count {
@@ -361,9 +381,11 @@ svg {
 .slider {
   position: absolute;
   inset: 0;
-  background-color: #CBD5E1;
+  background-color: #cbd5e1;
   border-radius: var(--radius-full);
-  transition: background-color 200ms ease, box-shadow 200ms ease;
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .slider::before {
@@ -468,7 +490,11 @@ svg {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   text-decoration: none;
-  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease, color 150ms ease;
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease;
 }
 
 .social-btn svg {
@@ -489,7 +515,9 @@ svg {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }

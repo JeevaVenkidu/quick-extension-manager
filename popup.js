@@ -1,15 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const listDiv = document.getElementById('extension-list');
-  const searchInput = document.getElementById('search');
-  const bulkBtn = document.getElementById('bulk-action-btn');
-  const bulkLabel = document.getElementById('bulk-action-label');
-  const statusText = document.getElementById('status-text');
+document.addEventListener("DOMContentLoaded", () => {
+  const listDiv = document.getElementById("extension-list");
+  const searchInput = document.getElementById("search");
+  const bulkBtn = document.getElementById("bulk-action-btn");
+  const bulkLabel = document.getElementById("bulk-action-label");
+  const statusText = document.getElementById("status-text");
 
   let allExtensions = [];
   let didLoad = false;
 
   function loadExtensions() {
-    if (!chrome || !chrome.management || typeof chrome.management.getAll !== 'function') {
+    if (
+      typeof chrome === "undefined" ||
+      !chrome.management ||
+      typeof chrome.management.getAll !== "function"
+    ) {
       finishLoading([]);
       return;
     }
@@ -34,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const exts = items.filter(
-          (item) => item && item.type === 'extension' && item.id !== chrome.runtime.id
+          (item) =>
+            item && item.type === "extension" && item.id !== chrome.runtime.id,
         );
         finishLoading(exts);
       });
@@ -58,49 +63,49 @@ document.addEventListener('DOMContentLoaded', () => {
   loadExtensions();
 
   function createExtItem(ext) {
-    const item = document.createElement('div');
-    item.className = 'ext-item';
-    item.setAttribute('role', 'listitem');
+    const item = document.createElement("div");
+    item.className = "ext-item";
+    item.setAttribute("role", "listitem");
 
-    const info = document.createElement('div');
-    info.className = 'ext-info';
+    const info = document.createElement("div");
+    info.className = "ext-info";
 
-    const icon = document.createElement('img');
-    icon.className = 'ext-icon';
-    icon.alt = '';
+    const icon = document.createElement("img");
+    icon.className = "ext-icon";
+    icon.alt = "";
     icon.src =
       ext.icons && ext.icons.length > 0
         ? ext.icons[ext.icons.length - 1].url
-        : 'data:image/svg+xml;base64,' + btoa(blobSvg());
+        : "data:image/svg+xml;base64," + btoa(blobSvg());
     icon.onerror = () => {
-      icon.src = 'data:image/svg+xml;base64,' + btoa(blobSvg());
+      icon.src = "data:image/svg+xml;base64," + btoa(blobSvg());
     };
 
-    const name = document.createElement('span');
-    name.className = 'ext-name';
+    const name = document.createElement("span");
+    name.className = "ext-name";
     name.textContent = ext.name;
     name.title = ext.name;
 
     info.appendChild(icon);
     info.appendChild(name);
 
-    const toggleLabel = document.createElement('label');
-    toggleLabel.className = 'switch';
-    toggleLabel.setAttribute('aria-label', `Toggle ${ext.name}`);
+    const toggleLabel = document.createElement("label");
+    toggleLabel.className = "switch";
+    toggleLabel.setAttribute("aria-label", `Toggle ${ext.name}`);
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
     checkbox.checked = ext.enabled;
     checkbox.setAttribute(
-      'aria-label',
-      `${ext.name} is ${ext.enabled ? 'enabled' : 'disabled'}`
+      "aria-label",
+      `${ext.name} is ${ext.enabled ? "enabled" : "disabled"}`,
     );
-    checkbox.addEventListener('change', () => {
+    checkbox.addEventListener("change", () => {
       handleToggle(ext, checkbox);
     });
 
-    const slider = document.createElement('span');
-    slider.className = 'slider';
+    const slider = document.createElement("span");
+    slider.className = "slider";
 
     toggleLabel.appendChild(checkbox);
     toggleLabel.appendChild(slider);
@@ -117,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.management.setEnabled(ext.id, wanted, () => {
       if (chrome.runtime.lastError) {
         checkbox.checked = ext.enabled;
-        showToast('Could not update extension');
+        showToast("Could not update extension");
       } else {
         ext.enabled = wanted;
         updateBulkButton();
@@ -135,16 +140,22 @@ document.addEventListener('DOMContentLoaded', () => {
       ? allExtensions.filter((e) => e.name.toLowerCase().includes(term))
       : allExtensions.slice();
 
-    listDiv.innerHTML = '';
-    listDiv.removeAttribute('aria-busy');
+    listDiv.innerHTML = "";
+    listDiv.removeAttribute("aria-busy");
 
     if (allExtensions.length === 0) {
-      renderEmpty('No extensions installed', 'Install extensions from the Chrome Web Store to manage them here.');
+      renderEmpty(
+        "No extensions installed",
+        "Install extensions from the Chrome Web Store to manage them here.",
+      );
       return;
     }
 
     if (filtered.length === 0) {
-      renderEmpty('No matches found', `No extensions match "${term}". Try a different search.`);
+      renderEmpty(
+        "No matches found",
+        `No extensions match "${term}". Try a different search.`,
+      );
       return;
     }
 
@@ -152,26 +163,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const disabled = filtered.filter((e) => !e.enabled);
 
     if (enabled.length > 0) {
-      listDiv.appendChild(buildCategoryHeader('enabled', 'Active', enabled.length));
+      listDiv.appendChild(
+        buildCategoryHeader("enabled", "Active", enabled.length),
+      );
       enabled.forEach((ext) => listDiv.appendChild(createExtItem(ext)));
     }
 
     if (disabled.length > 0) {
-      listDiv.appendChild(buildCategoryHeader('disabled', 'Inactive', disabled.length));
+      listDiv.appendChild(
+        buildCategoryHeader("disabled", "Inactive", disabled.length),
+      );
       disabled.forEach((ext) => listDiv.appendChild(createExtItem(ext)));
     }
   }
 
   function buildCategoryHeader(kind, label, count) {
-    const header = document.createElement('div');
+    const header = document.createElement("div");
     header.className = `category-header ${kind}`;
-    header.setAttribute('role', 'presentation');
+    header.setAttribute("role", "presentation");
 
-    const labelEl = document.createElement('span');
+    const labelEl = document.createElement("span");
     labelEl.textContent = label;
 
-    const countEl = document.createElement('span');
-    countEl.className = 'category-count';
+    const countEl = document.createElement("span");
+    countEl.className = "category-count";
     countEl.textContent = count;
 
     header.appendChild(labelEl);
@@ -180,9 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderEmpty(title, desc) {
-    listDiv.innerHTML = '';
-    const empty = document.createElement('div');
-    empty.className = 'empty';
+    listDiv.innerHTML = "";
+    const empty = document.createElement("div");
+    empty.className = "empty";
     empty.innerHTML = `
       <svg class="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
@@ -197,28 +212,31 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateBulkButton() {
     const enabledCount = allExtensions.filter((e) => e.enabled).length;
     const total = allExtensions.length;
-    statusText.textContent = total === 0
-      ? 'No extensions'
-      : `${enabledCount} active of ${total}`;
+    statusText.textContent =
+      total === 0 ? "No extensions" : `${enabledCount} active of ${total}`;
 
     if (enabledCount === 0 || total === 0) {
-      bulkLabel.textContent = 'Enable All';
-      bulkBtn.setAttribute('aria-label', 'Enable all disabled extensions');
-      bulkBtn.dataset.mode = 'enable';
+      bulkLabel.textContent = "Enable All";
+      bulkBtn.setAttribute("aria-label", "Enable all disabled extensions");
+      bulkBtn.dataset.mode = "enable";
     } else {
-      bulkLabel.textContent = 'Disable All';
-      bulkBtn.setAttribute('aria-label', 'Disable all enabled extensions');
-      bulkBtn.dataset.mode = 'disable';
+      bulkLabel.textContent = "Disable All";
+      bulkBtn.setAttribute("aria-label", "Disable all enabled extensions");
+      bulkBtn.dataset.mode = "disable";
     }
   }
 
-  bulkBtn.addEventListener('click', () => {
-    const mode = bulkBtn.dataset.mode === 'enable' ? true : false;
+  bulkBtn.addEventListener("click", () => {
+    const mode = bulkBtn.dataset.mode === "enable" ? true : false;
     const targets = allExtensions.filter((e) => e.enabled !== mode);
 
     if (targets.length === 0) return;
 
-    if (!confirm(`Are you sure you want to ${mode ? 'enable' : 'disable'} ${targets.length} extension${targets.length === 1 ? '' : 's'}?`)) {
+    if (
+      !confirm(
+        `Are you sure you want to ${mode ? "enable" : "disable"} ${targets.length} extension${targets.length === 1 ? "" : "s"}?`,
+      )
+    ) {
       return;
     }
 
@@ -246,18 +264,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  searchInput.addEventListener('input', () => {
+  searchInput.addEventListener("input", () => {
     renderList();
   });
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
       switch (c) {
-        case '&': return '&';
-        case '<': return '<';
-        case '>': return '>';
-        case '"': return '"';
-        case "'": return "'";
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
       }
     });
   }
@@ -268,10 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let toastTimer = null;
   function showToast(message) {
-    let toast = document.getElementById('toast');
+    let toast = document.getElementById("toast");
     if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'toast';
+      toast = document.createElement("div");
+      toast.id = "toast";
       toast.style.cssText = `
         position: fixed;
         top: 8px;
@@ -293,13 +316,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     toast.textContent = message;
     requestAnimationFrame(() => {
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateX(-50%) translateY(0)';
+      toast.style.opacity = "1";
+      toast.style.transform = "translateX(-50%) translateY(0)";
     });
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateX(-50%) translateY(-10px)';
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(-50%) translateY(-10px)";
     }, 2200);
   }
 });

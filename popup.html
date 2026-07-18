@@ -1,87 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Extension Manager</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <main class="popup" role="main" aria-label="Extension Manager">
-
-    <!-- HERO / HEADER -->
-    <header class="hero">
-      <div class="hero-brand">
-        <div class="hero-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z" fill="currentColor"/>
-          </svg>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Extension Manager</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup" role="main" aria-label="Extension Manager">
+      <!-- HERO / HEADER -->
+      <header class="hero">
+        <div class="hero-brand">
+          <div class="hero-mark" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div class="hero-text">
+            <h1 class="hero-title">Extension Manager</h1>
+            <p class="hero-subtitle">
+              <span id="status-text">Loading…</span>
+            </p>
+          </div>
         </div>
-        <div class="hero-text">
-          <h1 class="hero-title">Extension Manager</h1>
-          <p class="hero-subtitle">
-            <span id="status-text">Loading…</span>
-          </p>
-        </div>
-      </div>
-      <button type="button" id="bulk-action-btn" class="btn-bulk" aria-label="Disable all enabled extensions">
-        <span id="bulk-action-label">Disable All</span>
-      </button>
-    </header>
+        <button
+          type="button"
+          id="bulk-action-btn"
+          class="btn-bulk"
+          aria-label="Disable all enabled extensions"
+        >
+          <span id="bulk-action-label">Disable All</span>
+        </button>
+      </header>
 
-    <!-- SEARCH -->
-    <section class="search-section" aria-label="Search extensions">
-      <div class="search-shell">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-          <path d="m21 21-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <input
-          type="search"
-          id="search"
-          class="search-input"
-          placeholder="Search extensions"
-          autocomplete="off"
-          spellcheck="false"
-          aria-label="Search installed extensions"
-        />
-      </div>
-    </section>
-
-    <!-- EXTENSION LIST -->
-    <section class="list-section" aria-label="Extensions">
-      <div id="extension-list" class="list" role="list">
-        <div class="loading">
-          <div class="spinner" aria-hidden="true"></div>
-          <span>Loading extensions…</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer" role="contentinfo">
-      <p class="footer-text">Made by <strong>Jeeva</strong></p>
-      <div class="social-links" role="list">
-        <a href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer" class="social-btn" role="listitem" aria-label="Visit Website">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
-            <path d="M3 12h18M12 3a13.4 13.4 0 0 1 0 18M12 3a13.4 13.4 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <!-- SEARCH -->
+      <section class="search-section" aria-label="Search extensions">
+        <div class="search-shell">
+          <svg
+            class="search-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="7"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <path
+              d="m21 21-4.3-4.3"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
-          <span>Website</span>
-        </a>
-        <a href="https://github.com/your_username" target="_blank" rel="noopener noreferrer" class="social-btn" role="listitem" aria-label="View GitHub Profile">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.1c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.95 10.95 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.58.23 2.75.11 3.04.73.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.15v3.18c0 .31.21.67.8.55C20.21 21.38 23.5 17.07 23.5 12 23.5 5.65 18.35.5 12 .5Z" fill="currentColor"/>
-          </svg>
-          <span>GitHub</span>
-        </a>
-      </div>
-    </footer>
+          <input
+            type="search"
+            id="search"
+            class="search-input"
+            placeholder="Search extensions"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Search installed extensions"
+          />
+        </div>
+      </section>
 
-  </main>
-  <script src="popup.js"></script>
-</body>
+      <!-- EXTENSION LIST -->
+      <section class="list-section" aria-label="Extensions">
+        <div id="extension-list" class="list" role="list">
+          <div class="loading">
+            <div class="spinner" aria-hidden="true"></div>
+            <span>Loading extensions…</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer" role="contentinfo">
+        <p class="footer-text">Made by <strong>Jeeva</strong></p>
+        <div class="social-links" role="list">
+          <a
+            href="https://quick-extension-manager.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-btn"
+            role="listitem"
+            aria-label="Visit Website"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="M3 12h18M12 3a13.4 13.4 0 0 1 0 18M12 3a13.4 13.4 0 0 0 0 18"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Website</span>
+          </a>
+          <a
+            href="https://github.com/JeevaVenkidu/quick-extension-manager"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-btn"
+            role="listitem"
+            aria-label="View GitHub Profile"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.1c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.95 10.95 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.58.23 2.75.11 3.04.73.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.15v3.18c0 .31.21.67.8.55C20.21 21.38 23.5 17.07 23.5 12 23.5 5.65 18.35.5 12 .5Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
 </html>

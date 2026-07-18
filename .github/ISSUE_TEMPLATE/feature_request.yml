@@ -1,0 +1,47 @@
+name: Feature request
+description: Suggest a focused improvement for Quick Extension Manager
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Prefer proposals that preserve the local-only design and minimal permission set.
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: What recurring problem would this solve, and who experiences it?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest useful version of the feature.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: true
+  - type: dropdown
+    id: permissions
+    attributes:
+      label: Permission impact
+      options:
+        - No new permission expected
+        - May require a new permission
+        - I am not sure
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I searched existing issues and discussions.
+          required: true

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/JeevaVenkidu/quick-extension-manager/security/advisories/new
+    about: Report security issues privately through GitHub's vulnerability reporting.
+  - name: Community discussions
+    url: https://github.com/JeevaVenkidu/quick-extension-manager/discussions
+    about: Ask questions and discuss ideas with the community.

@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check JavaScript syntax
+        run: node --check popup.js
+
+  validate:
+    name: Validate extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate manifest and required files
+        shell: bash
+        run: |
+          node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('manifest.json','utf8')); if(m.manifest_version !== 3) throw new Error('Manifest V3 is required'); for (const file of ['popup.html','popup.css','popup.js','icon16.png','icon48.png','icon128.png']) if (!fs.existsSync(file)) throw new Error('Missing '+file); console.log('Extension files are valid')"
+
+  format:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check source, JSON, Markdown, and workflow formatting
+        run: npx --yes prettier@3.6.2 --check manifest.json popup.js popup.html popup.css '*.md' '.github/**/*.yml'
+
+  build:
+    name: Build extension archive
+    runs-on: ubuntu-latest
+    needs: [lint, validate, format]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Create release archive
+        run: zip -j quick-extension-manager.zip manifest.json popup.html popup.css popup.js icon16.png icon48.png icon128.png
+      - name: Verify archive contents
+        run: |
+          unzip -Z1 quick-extension-manager.zip | sort > archive-files.txt
+          printf '%s\n' icon128.png icon16.png icon48.png manifest.json popup.css popup.html popup.js | sort > expected-files.txt
+          diff -u expected-files.txt archive-files.txt
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: quick-extension-manager
+          path: quick-extension-manager.zip
+          if-no-files-found: error

@@ -1,0 +1,23 @@
+name: Question
+description: Ask for help using or contributing to the project
+title: "question: "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check the [FAQ](https://github.com/JeevaVenkidu/quick-extension-manager/blob/main/FAQ.md) and existing discussions before posting.
+  - type: textarea
+    id: question
+    attributes:
+      label: What would you like to know?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Include browser, operating system, and extension version when relevant.
+    validations:
+      required: true
