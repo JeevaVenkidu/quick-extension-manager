@@ -8,11 +8,19 @@ Search, enable, disable, and organize installed Chrome extensions from the brows
 
 ## Screenshots
 
-The extension is designed around a compact toolbar popup: a status header, bulk action, search field, grouped active/inactive list, and accessible toggle controls. The checked-in UI source is the canonical preview of the current design:
+### Installed Extension
 
-- [Popup markup](popup.html)
-- [Popup styling](popup.css)
-- [Extension icon](icon128.png)
+Quick Extension Manager loaded from `chrome://extensions/` in Chrome:
+
+![Quick Extension Manager installed on the Chrome extensions page](Screenshots/Screenshots1.png)
+
+### Extension Popup
+
+The toolbar popup with extension search, active and inactive groups, and individual toggles:
+
+![Quick Extension Manager toolbar popup](Screenshots/Screenshots2.png)
+
+The screenshots are stored in [`Screenshots/`](Screenshots/) and match the checked-in implementation in [popup.html](popup.html), [popup.css](popup.css), and [popup.js](popup.js).
 
 ## Features
 
