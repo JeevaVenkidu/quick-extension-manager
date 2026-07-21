@@ -5,17 +5,17 @@
   "description": "Turn extensions on and off quickly without going to the Chrome extensions page.",
   "permissions": ["management"],
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Quick Extension Manager",
     "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
+      "16": "icon/icon16.png",
+      "48": "icon/icon48.png",
+      "128": "icon/icon128.png"
     }
   }
 }
